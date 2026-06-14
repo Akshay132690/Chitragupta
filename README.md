@@ -4,7 +4,9 @@
   <img src="docs/screenshots/Home.png" alt="Chitragupta Home" width="900"/>
 </p>
 
-## Overview
+[![Live Demo](https://img.shields.io/badge/🌐-Live%20Demo-success?style=for-the-badge)](https://chitragupta-floodrisk.onrender.com/)
+
+
 
 Chitragupta is an AI-powered geospatial surveillance platform designed to automate environmental and infrastructure monitoring using satellite imagery and machine learning.
 
@@ -176,10 +178,11 @@ This repository focuses on the implementation, architecture, and source code.
 
 # Patent
 
-This project was developed as part of our final-year research work and is associated with a filed/published patent.
+This project was developed as part of our final-year research work and is associated with a published patent.
 
-Patent details can be added here if publicly available.
-
+<p align="center">
+  <img src="docs/patent.png" width="900">
+</p>
 ---
 
 # My Contributions
