@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Road Network Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- HEADER -->
+        <header>
+            <h1>🛣️ Road Network Detection</h1>
+            <p class="subtitle">
+                Automated extraction of road networks from aerial images using deep learning
+            </p>
+        </header>
+         <div style="text-align:center; margin-bottom: 20px;">
+    <a href="http://localhost:3000" style="text-decoration: none;">
+        <button class="home-btn">← Back to Home</button>
+    </a>
+</div>
+
+
+        <!-- UPLOAD -->
+        <section class="card">
+            <form id="uploadForm" action="/predict" method="post" enctype="multipart/form-data">
+                <div class="form-row">
+                    <label class="file-label">
+                        <input id="imageInput" type="file" name="image" accept="image/*" required>
+                        <span>Select Aerial Image</span>
+                    </label>
+
+                    <button id="submitBtn" type="submit" class="primary-btn">
+                        Detect Roads
+                    </button>
+                </div>
+
+                <div id="previewArea" class="preview-area hidden">
+                    <img id="previewImg" alt="Preview">
+                    <div id="spinner" class="spinner hidden"></div>
+                </div>
+            </form>
+        </section>
+
+        {% if result %}
+        <!-- RESULTS -->
+        <section class="card animate-in">
+            <h2 class="section-title">Model Output</h2>
+
+            <div class="results-grid">
+
+                <div class="result-block large">
+                    <h3>Input Image</h3>
+                    <img src="{{ url_for('static', filename='results/input_image.png') }}">
+                </div>
+
+                <div class="result-block large">
+                    <h3>Predicted Road Overlay</h3>
+                    <img id="overlayImg" src="{{ url_for('static', filename='results/overlay.png') }}">
+                    <label class="slider-label">
+                        Overlay Opacity
+                        <input id="blendSlider" type="range" min="0" max="100" value="50">
+                    </label>
+                </div>
+
+                <div class="result-block small">
+                    <h3>Binary Road Mask</h3>
+                    <img src="{{ url_for('static', filename='results/predicted_mask.png') }}">
+                </div>
+
+                <div class="result-block small">
+                    <h3>Confidence Heatmap</h3>
+                    <img src="{{ url_for('static', filename='results/confidence_heatmap.png') }}">
+                </div>
+
+            </div>
+
+            <!-- INFO -->
+            <div class="info-row">
+                <div class="info-card">
+                    <h4>Model Details</h4>
+                    <p><strong>Architecture:</strong> U-Net (ResNet-34)</p>
+                    <p><strong>Device:</strong> {{ info.device }}</p>
+                    <p><strong>Inference Time:</strong> {{ info.inference_time_s }} s</p>
+                </div>
+
+                <div class="info-card">
+                    <h4>Exports</h4>
+                    <a class="download-link" href="{{ url_for('static', filename='results/road_centerlines.geojson') }}"
+                        download>
+                        Download GeoJSON
+                    </a>
+                    <a class="download-link" href="{{ url_for('download_results') }}">
+                        Download All Results (ZIP)
+                    </a>
+                </div>
+            </div>
+
+            <!-- ADVANCED -->
+            <button id="toggleAdvanced" class="secondary-btn">
+                Show Advanced Output
+            </button>
+
+            <div id="advancedSection" class="hidden">
+                <p class="note">
+                    Road centerlines are exported as GeoJSON (pixel space) for GIS tools such as QGIS.
+                </p>
+            </div>
+
+        </section>
+        {% endif %}
+
+        <footer>
+            <p>Flask • PyTorch • U-Net • Road Network Detection</p>
+        </footer>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

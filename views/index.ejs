@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chitragupta AI - Environmental Monitoring System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-green': '#2E7D32',
+                        'dark-green': '#1B5E20',
+                        'light-green': '#81C784',
+                        'blue': '#0288D1',
+                        'dark-blue': '#01579B',
+                        'ice-blue': '#2a6f97',
+                        'urban-gray': '#263238',
+                        'water-blue': '#4FC3F7',
+                        'warning': '#FF6D00',
+                        'text-dark': '#263238',
+                        'text-light': '#ECEFF1',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fadeIn': 'fadeIn 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="font-inter bg-gray-50 text-text-dark min-h-screen overflow-x-hidden">
+    <!-- Header -->
+    <header class="fixed top-0 w-full z-50 bg-white shadow-sm border-b border-opacity-5">
+        <nav class="flex items-center justify-between py-4 pl-0 pr-4 md:pr-12 max-w-7xl mx-auto relative">
+            <!-- Logo -->
+            <div class="absolute -left-[150px] md:-left-[100px]">
+                <img src="we.png" alt="ChitraGupta" class="w-[150px] h-[150px] object-contain rounded-lg"
+                    onerror="this.src='placeholder.png'; this.onerror=null;">
+            </div>
+
+            <!-- Weather Widget -->
+            <div class="absolute right-[150px] md:right-[-280px] flex items-center gap-2">
+                <input type="text" id="locationInput" placeholder="Enter location"
+                    class="px-3 py-1 border rounded-full text-sm w-32 focus:outline-none focus:ring-1 focus:ring-primary-green">
+                <button onclick="fetchWeather()"
+                    class="bg-primary-green text-white px-3 py-1 rounded-full text-sm hover:bg-dark-green transition">
+                    🔍
+                </button>
+                <div class="bg-primary-green text-white px-3 py-1 rounded-full text-sm font-medium hidden md:block"
+                    id="weatherWidget">
+                    Loading...
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <ul class="hidden md:flex list-none gap-7 text-[20px] mx-auto">
+                <li>
+                    <a href="#home"
+                        class="text-green-950 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-green-600">Home</a>
+                </li>
+                <li>
+                    <a href="#apod"
+                        class="text-green-950 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-sky-500">Satellite
+                        View</a>
+                </li>
+                <li>
+                    <a href="#monitoring"
+                        class="text-green-950 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-emerald-600">Monitoring</a>
+                </li>
+                <li>
+                    <a href="#contact"
+                        class="text-green-950 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-cyan-600">Contact</a>
+                </li>
+                <li>
+                    <a href="/admin-login"
+                        class="text-green-950 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-teal-500">Admin</a>
+                </li>
+                <li>
+                    <% if (user) { %>
+                        <!-- Logout Button -->
+                        <a href="/logout"
+                            class="text-red-600 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-red-500 shadow-sm">
+                            Logout
+                        </a>
+                        <% } else { %>
+                            <!-- Login Button -->
+                            <a href="/login"
+                                class="text-green-600 no-underline transition-all duration-300 px-4 py-2 rounded-full font-semibold hover:text-white hover:bg-green-500 shadow-sm">
+                                Login
+                            </a>
+                            <% } %>
+                </li>
+
+            </ul>
+
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-500 ml-2">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section
+        class="h-screen flex items-center justify-center text-center px-4 md:px-12 relative bg-gradient-to-br from-primary-green/10 to-light-green/5"
+        id="home">
+        <div class="hero-content">
+
+            <% if (user) { %>
+                <div class="flex items-center justify-center space-x-4 animate-fadeIn animation-delay-200">
+                    <img src="<%= user.image %>" alt="User Image" class="w-12 h-12 rounded-full shadow-md"
+                        referrerpolicy="no-referrer" onerror="this.onerror=null; this.src='/default-user.png';" />
+
+                    <h2 class="text-xl text-gray-700">Welcome, <%= user.name %> 👋</h2>
+                </div>
+                <% } else { %>
+                    <a href="/auth/google"
+                        class="absolute top-6 right-6 text-white bg-primary-green px-4 py-2 rounded-full font-semibold shadow hover:bg-green-800 transition-all">
+                        Login with Google
+                    </a>
+                    <% } %>
+
+
+
+                        <h1
+                            class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 text-primary-green leading-tight animate-fadeIn">
+                            Environmental Monitoring AI</h1>
+                        <div
+                            class="text-xl md:text-2xl text-dark-green mb-4 font-semibold animate-fadeIn animation-delay-200">
+                            Advanced satellite analysis for planetary stewardship</div>
+                        <p class="text-xl max-w-4xl mx-auto mb-10 animate-fadeIn animation-delay-400">Our AI-powered
+                            platform provides comprehensive monitoring of critical environmental systems including
+                            glacial lakes, urban infrastructure, and water management networks using multi-source
+                            satellite imagery and machine learning.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn animation-delay-600">
+                            <button onclick="scrollToSection('monitoring')"
+                                class="border-2 border-primary-green text-primary-green px-8 py-4 rounded-full text-lg font-semibold cursor-pointer transition-all duration-300 hover:bg-primary-green hover:text-white">Explore
+                                Systems</button>
+                            <button onclick="window.open('#', '_blank')"
+                                class="border-2 border-primary-green text-primary-green px-8 py-4 rounded-full text-lg font-semibold cursor-pointer transition-all duration-300 hover:bg-primary-green hover:text-white">View
+                                Documentation</button>
+                        </div>
+        </div>
+    </section>
+
+    <!-- APOD Section -->
+    <section class="py-20 px-4 md:px-12 max-w-7xl mx-auto relative" id="apod">
+        <h2 class="text-4xl font-bold text-center mb-4 text-primary-green">Satellite Perspective</h2>
+        <p class="text-lg text-urban-gray text-center mb-12">Daily Earth observation from NASA's satellite archives</p>
+        <div class="bg-white border-4 border-green-500 rounded-xl p-8 shadow-lg mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="apodContent">
+                <div>
+                    <p class="text-lg">Loading satellite imagery...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Monitoring Section -->
+    <section class="py-20 px-4 md:px-12 max-w-7xl mx-auto relative" id="monitoring">
+        <h2 class="text-4xl font-bold text-center mb-4 text-primary-green">Monitoring Systems</h2>
+        <p class="text-lg text-urban-gray text-center mb-12">Comprehensive environmental tracking through advanced AI
+            analysis</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            <!-- Glacier Card -->
+            <div
+                class="bg-white rounded-xl p-8 text-center transition-all duration-300 overflow-hidden border-t-4 border-ice-blue shadow-md hover:-translate-y-2 hover:bg-ice-blue hover:text-white hover:shadow-lg">
+                <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-cyan-900 flex items-center justify-center text-3xl">
+                    🏔️</div>
+                <h3 class="text-2xl font-semibold mb-4">Glacial Monitoring</h3>
+                <p class="text-urban-gray hover:text-white mb-6 transition-colors duration-300">Track glacial retreat,
+                    ice thickness changes, and predict glacial lake outburst floods (GLOFs) using satellite imagery and
+                    climate models.</p>
+                <a href="/glacier">
+                    <button
+                        class="border-2 border-white text-white px-6 py-2 rounded-full font-bold transition-all duration-300 hover:bg-white hover:text-ice-blue">View
+                        Glacier Data</button>
+                </a>
+            </div>
+
+            <!-- Infrastructure Card -->
+            <div
+                class="bg-white rounded-xl p-8 text-center transition-all duration-300 overflow-hidden border-t-4 border-urban-gray shadow-md hover:-translate-y-2 hover:bg-gray-500 hover:text-white hover:shadow-lg">
+                <div
+                    class="w-20 h-20 mx-auto mb-6 rounded-full bg-urban-gray flex items-center justify-center text-3xl text-white">
+                    🛣️</div>
+                <h3 class="text-2xl font-semibold mb-4">Infrastructure Tracking</h3>
+                <p class="text-urban-gray hover:text-white mb-6 transition-colors duration-300">Monitor road network
+                    evolution, infrastructure changes, and assess climate resilience of transportation systems.</p>
+                <a href="/road">
+                    <button
+                        class="border-2 border-white text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:bg-white hover:text-urban-gray">Analyze
+                        Infrastructure</button>
+                </a>
+            </div>
+
+            <!-- Water Management Card -->
+            <div
+                class="bg-white rounded-xl p-8 text-center transition-all duration-300 overflow-hidden border-t-4 border-water-blue shadow-md hover:-translate-y-2 hover:bg-water-blue hover:text-white hover:shadow-lg">
+                <div
+                    class="w-20 h-20 mx-auto mb-6 rounded-full bg-water-blue flex items-center justify-center text-3xl">
+                    🌊</div>
+                <h3 class="text-2xl font-semibold mb-4">Water Management</h3>
+                <p class="text-urban-gray hover:text-white mb-6 transition-colors duration-300">Analyze urban drainage
+                    systems, predict flood risks, and optimize water management through satellite-based monitoring.</p>
+                <a href="/drainage">
+                    <button
+                        class="border-2 border-white text-white px-6 py-2 rounded-full font-semibold transition-all duration-300 hover:bg-white hover:text-water-blue">Monitor
+                        Water Systems</button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-12 bg-primary-green text-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <p>&copy; 2025 Chitragupta AI Environmental Systems. All rights reserved.</p>
+            <p class="mt-2">Advanced satellite monitoring for sustainable planetary management</p>
+            <p class="mt-4 italic opacity-80">"Precision monitoring for a sustainable future"</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functions
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Weather API with location input
+        async function fetchWeather() {
+            const locationInput = document.getElementById('locationInput');
+            const location = locationInput.value || 'Amravati,Maharashtra,IN';
+            const widget = document.getElementById('weatherWidget');
+
+            widget.innerHTML = 'Loading...';
+
+            try {
+                const response = await fetch(`/api/weather?location=${encodeURIComponent(location)}`);
+                const data = await response.json();
+
+                if (data.cod === 200) {
+                    widget.innerHTML = `🌡️ ${Math.round(data.main.temp)}°C | ${data.weather[0].main} | ${data.name}`;
+                } else {
+                    widget.innerHTML = 'Location not found';
+                }
+            } catch (error) {
+                console.error('Error fetching weather:', error);
+                widget.innerHTML = 'Weather N/A';
+            }
+        }
+
+        // NASA APOD API
+        async function loadAPOD() {
+            try {
+                const response = await fetch('/api/apod');
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.message || 'Failed to fetch APOD data');
+                }
+
+                const apodHtml = `
+            <div>
+                <img src="${data.url}" alt="${data.title}" class="w-full h-96 object-cover rounded-lg shadow-xl">
+            </div>
+            <div class="flex flex-col justify-center">
+                <h4 class="text-2xl font-semibold mb-4 text-primary-green">${data.title}</h4>
+                <p class="mb-4 text-urban-gray"><strong>Date:</strong> ${data.date}</p>
+                <p class="leading-relaxed">${data.explanation.substring(0, 300)}...</p>
+                <button onclick="window.open('${data.url}', '_blank')" 
+                    class="bg-primary-green border-none px-6 py-3 rounded-full text-white font-semibold cursor-pointer 
+                    transition-all duration-300 shadow-md shadow-primary-green/30 hover:bg-dark-green 
+                    hover:-translate-y-0.5 mt-6 w-fit">
+                    View Full Image
+                </button>
+            </div>
+        `;
+
+                document.getElementById('apodContent').innerHTML = apodHtml;
+            } catch (error) {
+                console.error('APOD Error:', error);
+                document.getElementById('apodContent').innerHTML = `
+            <div class="text-center py-8">
+                <p class="text-lg text-warning">Satellite data temporarily unavailable</p>
+                <p class="text-sm text-gray-500 mt-2">${error.message}</p>
+            </div>
+        `;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchWeather(); // Load weather with default location
+            loadAPOD();
+
+            // Add intersection observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeIn');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('[class*="animate-"]').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Allow pressing Enter in location input
+            document.getElementById('locationInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    fetchWeather();
+                }
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+
+      //  document.addEventListener('DOMContentLoaded', function () {
+    //const message = "<%= user ? 'Hello ' + user.name + ', welcome to Chitragupta AI' : 'Please login to continue' %>";
+    //const speech = new SpeechSynthesisUtterance(message);
+
+    // Optional: ensure voices are loaded
+   // speech.lang = 'en-US';
+   // speech.rate = 1;
+   // speech.pitch = 1;
+
+    // Wait for voices to be loaded (some browsers need this)
+  //  speechSynthesis.onvoiceschanged = () => {
+ //     window.speechSynthesis.speak(speech);
+ //   };
+
+    // In case voices already loaded
+   // if (speechSynthesis.getVoices().length > 0) {
+  //    window.speechSynthesis.speak(speech);
+  //  }
+ // });
+    </script>
+</body>
+
+</html>

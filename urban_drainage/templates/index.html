@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI Urban Drainage Surveillance</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(120deg, #e0f7fa, #f1f8ff, #ffffff);
+            min-height: 100vh;
+            color: #263238;
+        }
+
+        /* Glass card */
+        .glass {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            border-radius: 22px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 48px 20px 28px;
+        }
+
+        .header h1 {
+            font-weight: 800;
+            background: linear-gradient(45deg, #006064, #26c6da);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            color: #546e7a;
+            margin-top: 6px;
+        }
+
+        /* Input */
+        .input-card input {
+            border-radius: 14px;
+            border: 1px solid #b2ebf2;
+        }
+
+        .btn-analyze {
+            background: linear-gradient(45deg, #26c6da, #00acc1);
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Metric cards */
+        .metric {
+            text-align: center;
+            padding: 28px;
+        }
+
+        .metric h2 {
+            font-weight: 800;
+            color: #00838f;
+            margin: 6px 0;
+        }
+
+        .metric small {
+            color: #607d8b;
+        }
+
+        /* Risk Command Center */
+        .risk-command {
+            text-align: center;
+            padding: 34px 24px 28px;
+            background-color: #006064;
+        }
+
+        .risk-wrapper {
+
+            position: relative;
+            height: 300px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .risk-value {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 46px;
+            font-weight: 800;
+        }
+
+        .risk-badge {
+            margin-top: 12px;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            display: inline-block;
+            color: #fff;
+        }
+
+        .pulse {
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 18px rgba(255, 82, 82, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+            }
+        }
+
+        /* Recommendation */
+        .recommendation {
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-size: 14px;
+            max-width: 520px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Section title */
+        .section-title {
+            font-weight: 700;
+            color: #006064;
+            text-align: center;
+        }
+
+        /* Map */
+        .map-box {
+            height: 480px;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        canvas {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 10px;
+        }
+
+        #rissec {
+            font-weight: 700;
+            color: #f1c668;
+            text-align: center;
+        }
+
+
+    /* Home Button */
+.btn-theme-home {
+    background: linear-gradient(45deg, #26c6da, #006064);
+    color: #ffffff;
+    border: none;
+    padding: 10px 26px;
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 6px 18px rgba(38, 198, 218, 0.35);
+    transition: all 0.3s ease;
+}
+
+.btn-theme-home:hover {
+    background: linear-gradient(45deg, #00acc1, #004d40);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0, 96, 100, 0.45);
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🌊 AI-Based Urban Drainage Surveillance</h1>
+            <p>Decision-support system for urban flood & drainage risk management</p>
+        </div>
+        <div class="text-center mb-4">
+    <a href="http://localhost:3000" style="text-decoration: none;">
+        <button class="btn-theme-home">
+            ← Back to Home
+        </button>
+    </a>
+</div>
+
+
+        <!-- INPUT -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-6 col-md-8 glass p-4 input-card">
+                <form method="POST" class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <input type="text" name="city_name" class="form-control" placeholder="Enter City Name" required>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-analyze w-100">Analyze City</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if prediction %}
+        <!-- METRICS -->
+        <div class="row g-4 px-4 justify-content-center">
+            <div class="col-lg-3 col-md-4">
+                <div class="glass metric">
+                    <small>Drainage Segments Analysed</small>
+                   {% if city_data %}
+  <h2>{{ city_data|length }}</h2>
+{% else %}
+  <h2>0</h2>
+{% endif %}
+
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="glass metric">
+                    <small>Risk Categories Identified</small>
+                    <h2>{{ risk_labels|length }}</h2>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <div class="glass metric">
+                    <small>Early Warning Status</small>
+                    <h2 id="warningStatus">ACTIVE</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- RISK COMMAND CENTER -->
+        <div class="row px-4 mt-4 justify-content-center">
+            <div class="col-lg-10 glass risk-command">
+                <h5 class="section-title mb-3" id="rissec">🚨 City Flood Risk Command Center</h5>
+
+                <div class="risk-wrapper">
+                    <canvas id="riskGauge" data-score="{{ risk_score }}"></canvas>
+                    <div class="risk-value" id="riskValue"></div>
+                </div>
+
+                <div id="riskBadge" class="risk-badge"></div>
+                <div id="riskAdvice" class="recommendation"></div>
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="row px-4 mt-4 justify-content-center">
+            <div class="col-lg-11 glass p-4">
+                <h6 class="section-title mb-2">Geospatial Drainage Risk Map</h6>
+                <div class="map-box mt-3">
+                    {{ map_html | safe }}
+                </div>
+            </div>
+        </div>
+
+        <!-- SCATTER -->
+        <div class="row px-4 mt-4 mb-5 justify-content-center">
+            <div class="col-lg-11 glass p-4">
+                <h6 class="section-title mb-2">Spatial Risk Hotspot Analysis</h6>
+                <canvas id="scatterChart" data-points='{{ city_data | tojson }}' style="height:460px;"></canvas>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        const warning = document.getElementById("warningStatus");
+
+
+        /* Risk Command Center */
+        const g = document.getElementById("riskGauge");
+        if (g) {
+            const score = parseInt(g.dataset.score);
+            document.getElementById("riskValue").innerText = score + "%";
+
+            let color, badge, advice;
+            if (warning) {
+                if (score <= 40) warning.innerText = "NORMAL";
+                else if (score <= 70) warning.innerText = "WATCH";
+                else if (score <= 85) warning.innerText = "ALERT";
+                else warning.innerText = "EMERGENCY";
+            }
+            if (score <= 40) {
+                color = "#26c6da";
+                badge = "LOW RISK";
+                advice = "Drainage infrastructure operating within safe limits.";
+            } else if (score <= 70) {
+                color = "#ffb74d";
+                badge = "MODERATE RISK";
+                advice = "Potential waterlogging zones detected. Preventive maintenance recommended.";
+            } else if (score <= 85) {
+                color = "#ff7043";
+                badge = "HIGH RISK";
+                advice = "Flood-prone drainage segments identified. Mitigation measures advised.";
+            } else {
+                color = "#ff5252";
+                badge = "CRITICAL RISK";
+                advice = "Immediate action required. High probability of urban flooding.";
+            }
+
+            const badgeEl = document.getElementById("riskBadge");
+            badgeEl.innerText = badge;
+            badgeEl.style.background = color;
+            if (score > 70) badgeEl.classList.add("pulse");
+
+            const adviceEl = document.getElementById("riskAdvice");
+            adviceEl.innerText = advice;
+            adviceEl.style.background = color + "22";
+            adviceEl.style.color = color;
+
+            new Chart(g, {
+                type: "doughnut",
+                data: {
+                    datasets: [{
+                        data: [score, 100 - score],
+                        backgroundColor: [color, "#e0e0e0"],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    rotation: -90,
+                    circumference: 180,
+                    cutout: "78%",
+                    plugins: { legend: { display: false }, tooltip: { enabled: false } }
+                }
+            });
+        }
+
+        /* Scatter Plot */
+        const s = document.getElementById("scatterChart");
+        if (s) {
+            const pts = JSON.parse(s.dataset.points), grp = {};
+            pts.forEach(p => {
+                grp[p.predicted_label] ??= [];
+                grp[p.predicted_label].push({ x: p.longitude, y: p.latitude });
+            });
+
+            new Chart(s, {
+                type: "scatter",
+                data: {
+                    datasets: Object.keys(grp).map(l => ({
+                        label: l,
+                        data: grp[l],
+                        pointRadius: 5
+                    }))
+                },
+                options: {
+                    plugins: { legend: { position: "bottom" } },
+                    scales: {
+                        x: { title: { display: true, text: "Longitude" } },
+                        y: { title: { display: true, text: "Latitude" } }
+                    }
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>

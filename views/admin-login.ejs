@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login - Chitragupta AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-green': '#2E7D32',
+                        'dark-green': '#1B5E20',
+                        'light-green': '#81C784',
+                        'blue': '#0288D1',
+                        'dark-blue': '#01579B',
+                        'ice-blue': '#2a6f97',
+                        'urban-gray': '#263238',
+                        'water-blue': '#4FC3F7',
+                        'warning': '#FF6D00',
+                        'text-dark': '#263238',
+                        'text-light': '#ECEFF1',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fadeIn': 'fadeIn 0.8s ease-out forwards',
+                        'slideUp': 'slideUp 0.6s ease-out forwards',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            'from': { opacity: '0', transform: 'translateY(50px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glow: {
+                            'from': { boxShadow: '0 0 20px rgba(46, 125, 50, 0.3)' },
+                            'to': { boxShadow: '0 0 30px rgba(46, 125, 50, 0.6)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body
+    class="font-inter min-h-screen bg-gradient-to-br from-primary-green/10 via-light-green/5 to-blue/10 flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <!-- <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-primary-green/10 rounded-full animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-24 h-24 bg-water-blue/10 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute top-3/4 left-1/2 w-16 h-16 bg-light-green/10 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+    </div> -->
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full max-w-md">
+        <!-- Logo/Brand Section -->
+        <div class="text-center mb-8 animate-fadeIn">
+            <div class="w-50 h-30 mx-auto mb-4  items-center justify-center  overflow-hidden">
+                <img src="we.png" alt="Chitragupta" class="w-full h-full object-contain"
+                    onerror="this.src='placeholder.png'; this.onerror=null;">
+            </div>
+            <!-- <h1 class="text-3xl font-bold text-primary-green mb-2">Chitragupta AI</h1> -->
+            <!-- 
+            <p class="text-urban-gray">Environmental Monitoring System</p> -->
+
+
+            <!-- Login Form -->
+            <form method="POST" action="/admin-login"
+                class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/20 animate-slideUp">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-bold text-primary-green mb-2">Admin Access</h2>
+                    <p class="text-urban-gray/70">Secure administrative portal</p>
+                </div>
+
+                <% if (error) { %>
+                    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6 rounded-r-lg animate-fadeIn">
+                        <div class="flex items-center">
+                            <span class="text-red-400 mr-2">⚠️</span>
+                            <p class="text-red-700 text-sm">
+                                <%= error %>
+                            </p>
+                        </div>
+                    </div>
+                    <% } %>
+
+                        <div class="mb-6">
+                            <label class="block text-urban-gray font-semibold mb-2">Admin Password</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-green">🔐</span>
+                                <input type="password" name="password" placeholder="Enter secure admin password"
+                                    class="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:border-primary-green focus:outline-none focus:ring-4 focus:ring-primary-green/20 transition-all duration-300 bg-white/80"
+                                    required autocomplete="current-password">
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-gradient-to-r from-primary-green to-dark-green hover:from-dark-green hover:to-primary-green text-white font-bold py-4 rounded-xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-primary-green/30">
+                            <span class="flex items-center justify-center">
+                                <span class="mr-2">🚀</span>
+                                Access Dashboard
+                            </span>
+                        </button>
+
+                        <div class="text-center mt-6">
+                            <a href="/"
+                                class="text-primary-green hover:text-dark-green font-semibold transition-colors duration-300 flex items-center justify-center">
+                                <span class="mr-2">←</span>
+                                Back to Home
+                            </a>
+                        </div>
+            </form>
+
+            <!-- Footer -->
+            <div class="text-center mt-8 animate-fadeIn" style="animation-delay: 0.4s;">
+                <p class="text-urban-gray/60 text-sm">
+                    © 2025 Chitragupta AI Environmental Systems
+                </p>
+                <p class="text-urban-gray/50 text-xs mt-1">
+                    Advanced satellite monitoring for sustainable planetary management
+                </p>
+            </div>
+        </div>
+
+        <script>
+            // Add some interactive effects
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.querySelector('form');
+                const input = document.querySelector('input[type="password"]');
+
+                // Add focus effects
+                input.addEventListener('focus', function () {
+                    form.classList.add('ring-4', 'ring-primary-green/10');
+                });
+
+                input.addEventListener('blur', function () {
+                    form.classList.remove('ring-4', 'ring-primary-green/10');
+                });
+
+                // Add form submission effect
+                form.addEventListener('submit', function () {
+                    const button = form.querySelector('button[type="submit"]');
+                    button.innerHTML = '<span class="flex items-center justify-center"><span class="animate-spin mr-2">⏳</span>Authenticating...</span>';
+                    button.disabled = true;
+                });
+            });
+        </script>
+</body>
+
+</html>

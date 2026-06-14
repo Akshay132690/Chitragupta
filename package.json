@@ -1,0 +1,46 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000C\u0000h\u0000i\u0000t\u0000r\u0000a\u0000g\u0000u\u0000p\u0000t\u0000a\u0000",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "connect-mongo": "^5.1.0",
+    "cookie-parser": "^1.4.7",
+    "csurf": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
+    "express-session": "^1.18.2",
+    "helmet": "^8.1.0",
+    "mongodb": "^6.12.0",
+    "mongoose": "^8.10.0",
+    "morgan": "^1.10.1",
+    "node-fetch": "^2.7.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "nodemon": "^3.1.11",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmk798/Chitragupta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tmk798/Chitragupta/issues"
+  },
+  "homepage": "https://github.com/tmk798/Chitragupta#readme"
+}

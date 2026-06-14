@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Glacier Lake Monitor</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Glacier Lake Change Analysis 🧊</h1>
+            <p>Select a lake and date to see area and predictions.</p>
+        </header>
+        <div style="text-align:center; margin-bottom: 20px;">
+    <a href="http://localhost:3000" style="text-decoration: none;">
+        <button class="home-btn">← Back to Home</button>
+    </a>
+</div>
+
+
+        <section class="controls">
+            <label for="lake-selector">Select Lake:</label>
+            <select id="lake-selector">
+                <option value="">Loading lakes...</option>
+            </select>
+
+            <label for="date-selector" style="margin-left:16px;">Select Date:</label>
+            <select id="date-selector">
+                <option value="">Select a lake first...</option>
+            </select>
+
+            <button id="download-report" style="margin-left:16px;">Download Report</button>
+        </section>
+
+        <section class="visualizer">
+            <div class="image-container">
+                <div class="image-frame">
+                    <h3>Original Image</h3>
+                    <img id="original-image" alt="Original Image" />
+                </div>
+                <div class="image-frame">
+                    <h3>Predicted Mask</h3>
+                    <img id="predicted-mask" alt="Predicted Mask" />
+                </div>
+            </div>
+
+            <div class="area-info">
+                <p>
+                    Predicted Lake Area: <span id="lake-area">--</span> pixels
+                    <span id="confidence-score" style="margin-left:20px;">Confidence: --%</span>
+                </p>
+                <div class="area-bar">
+                    <div id="area-fill"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="risk-container">
+            <h2>Glacier Outburst Risk</h2>
+            <div class="risk-meter">
+                <div class="gauge">
+                    <div class="needle" id="risk-needle"></div>
+                    <div class="labels">
+                        <span>Low</span><span>Moderate</span><span>High</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="compare-section">
+            <h2>Compare Dates</h2>
+            <div class="compare-controls">
+                <label for="compare-date-1">Date 1:</label>
+                <select id="compare-date-1"></select>
+                <label for="compare-date-2">Date 2:</label>
+                <select id="compare-date-2"></select>
+                <button id="compare-button">Compare</button>
+            </div>
+            <div class="compare-images">
+                <div class="image-frame">
+                    <h3>Mask - Date 1</h3>
+                    <img id="compare-mask-1" alt="Mask 1" />
+                    <p id="area-date-1">Lake Area: --</p>
+                </div>
+                <div class="image-frame">
+                    <h3>Mask - Date 2</h3>
+                    <img id="compare-mask-2" alt="Mask 2" />
+                    <p id="area-date-2">Lake Area: --</p>
+                </div>
+            </div>
+        </section>
+        <section class="change-cards-section">
+            <h2>Year-wise Lake Area Change</h2>
+            <div id="change-cards" class="change-cards"></div>
+        </section>
+        <section class="timeline-section">
+            <h2>Lake Area Change Timeline</h2>
+            <svg id="timeline-chart" viewBox="0 0 1000 300" preserveAspectRatio="none"></svg>
+        </section>
+
+
+
+
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>

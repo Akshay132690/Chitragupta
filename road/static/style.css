@@ -1,0 +1,285 @@
+:root {
+    --accent: #2563eb;
+    --accent-soft: #eef2ff;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #0f1724;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    background-color: #262d36;
+
+}
+
+.container {
+    max-width: 1100px;
+    margin: 32px auto;
+    padding: 20px;
+}
+
+/* ---------- HEADER ---------- */
+
+header {
+    text-align: center;
+    margin-bottom: 24px;
+    color: white;
+}
+
+h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+.subtitle {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+#uploadForm {
+    border: 1px dashed black;
+    padding: 10px;
+}
+
+/* ---------- CARDS ---------- */
+
+.card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 0 6px 22px rgba(15, 23, 36, 0.08);
+    margin-bottom: 22px;
+    background-color: rgb(181, 217, 247);
+
+}
+
+.section-title {
+    font-size: 20px;
+    margin-bottom: 14px;
+}
+
+/* ---------- UPLOAD ---------- */
+
+.form-row {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.file-label {
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    border: 1px solid #dbeafe;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.file-label input {
+    display: none;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.primary-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ---------- PREVIEW ---------- */
+
+.preview-area {
+    margin-top: 18px;
+    text-align: center;
+}
+
+.preview-area img {
+    max-width: 320px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(15, 23, 36, 0.08);
+}
+
+/* ---------- SPINNER ---------- */
+
+.spinner {
+    margin: 16px auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 5px solid #e5e7eb;
+    border-top-color: var(--accent);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ---------- RESULTS GRID ---------- */
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.result-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    background: #fbfdff;
+    border: 1px solid black;
+}
+
+.result-block.large {
+    grid-column: span 1;
+
+}
+
+.result-block.small {
+    grid-column: span 1;
+}
+
+.result-block h3 {
+    margin: 6px 0 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.result-block img {
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+/* ---------- SLIDER ---------- */
+
+.slider-label {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.slider-label input {
+    width: 100%;
+    margin-top: 6px;
+}
+
+
+
+/* ---------- INFO ---------- */
+
+.info-row {
+    display: flex;
+    gap: 14px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    flex: 1;
+    min-width: 260px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    background: #ffffff;
+}
+
+.info-card h4 {
+    margin: 0 0 8px;
+    font-size: 15px;
+}
+
+/* ---------- DOWNLOADS ---------- */
+
+.download-link {
+    display: inline-block;
+    margin-top: 8px;
+    margin-right: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #eef4ff;
+    color: #1e3a8a;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* ---------- ADVANCED ---------- */
+
+.secondary-btn {
+    margin-top: 18px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.note {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 20px;
+}
+
+/* ---------- UTILS ---------- */
+
+.hidden {
+    display: none;
+}
+
+.animate-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 768px) {
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+}

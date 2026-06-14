@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        <%= title %> - Chitragupta AI
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-green': '#2E7D32',
+                        'dark-green': '#1B5E20',
+                        'light-green': '#81C784',
+                        'blue': '#0288D1',
+                        'dark-blue': '#01579B',
+                        'ice-blue': '#2a6f97',
+                        'urban-gray': '#263238',
+                        'water-blue': '#4FC3F7',
+                        'warning': '#FF6D00',
+                        'text-dark': '#263238',
+                        'text-light': '#ECEFF1',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fadeIn': 'fadeIn 0.8s ease-out forwards',
+                        'slideIn': 'slideIn 0.6s ease-out forwards',
+                        'pulse-gentle': 'pulse-gentle 3s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideIn: {
+                            'from': { opacity: '0', transform: 'translateX(-20px)' },
+                            'to': { opacity: '1', transform: 'translateX(0)' },
+                        },
+                        'pulse-gentle': {
+                            '0%, 100%': { opacity: '0.8' },
+                            '50%': { opacity: '0.4' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body
+    class="font-inter bg-gradient-to-br from-primary-green/10 via-light-green/5 to-blue/10 min-h-screen relative overflow-x-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-20 w-32 h-32 bg-primary-green/5 rounded-full animate-pulse-gentle"></div>
+        <div class="absolute bottom-20 right-20 w-24 h-24 bg-water-blue/5 rounded-full animate-pulse-gentle"
+            style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-10 w-16 h-16 bg-light-green/5 rounded-full animate-float"></div>
+        <div class="absolute top-1/3 right-1/3 w-20 h-20 bg-blue/5 rounded-full animate-float"
+            style="animation-delay: 3s;"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 bg-white/90 backdrop-blur-sm shadow-lg border-b border-primary-green/20">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Title -->
+                <div class="flex items-center space-x-4 animate-slideIn">
+                    <div class="w-25 h-20">
+                        <img src="we.png" alt="Chitragupta" class="w-full h-full object-contain ml-auto mr-2"
+                            onerror="this.src='placeholder.png'; this.onerror=null;">
+                    </div>
+
+                    <div>
+                        <h1 class="text-2xl font-bold text-primary-green">Admin Dashboard</h1>
+                        <p class="text-sm text-urban-gray/70">Environmental Monitoring System</p>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex items-center space-x-4 animate-fadeIn" style="animation-delay: 0.2s;">
+                    <div class="flex items-center space-x-2 text-urban-gray">
+                        <span class="text-green-600">🔗</span>
+                        <span class="font-medium">System Active</span>
+                    </div>
+                    <a href="/"
+                        class="text-primary-green hover:text-dark-green font-semibold transition-colors duration-300 px-4 py-2 rounded-full hover:bg-primary-green/10">
+                        🏠 Home
+                    </a>
+                    <a href="/logout"
+                        class="text-red-600 hover:text-red-700 font-semibold transition-all duration-300 px-4 py-2 rounded-full hover:bg-red-50 flex items-center space-x-2">
+                        <span>🚪</span>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 max-w-7xl mx-auto px-6 py-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Total Users Card -->
+            <div
+                class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 animate-fadeIn hover:transform hover:scale-105 transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-urban-gray/70 text-sm font-medium">Total Users</p>
+                        <p class="text-3xl font-bold text-primary-green">
+                            <%= users.length %>
+                        </p>
+                    </div>
+                    <div class="w-16 h-16 bg-primary-green/10 rounded-full flex items-center justify-center text-2xl">
+                        👥
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Status Card -->
+            <div class="bg-/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 animate-fadeIn hover:transform hover:scale-105 transition-all duration-300"
+                style="animation-delay: 0.1s;">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-urban-gray/70 text-sm font-medium">System Status</p>
+                        <p class="text-xl font-bold text-green-600">Operational</p>
+                    </div>
+                    <div class="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center text-2xl">
+                        ⚙️
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoring Active Clock Card -->
+            <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 animate-fadeIn hover:transform hover:scale-105 transition-all duration-300"
+                style="animation-delay: 0.2s;">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-urban-gray/70 text-sm font-medium">Current Time</p>
+                        <p id="liveClock" class="text-2xl font-bold text-urban-gray mt-1">--:--:--</p>
+                    </div>
+                    <div class="w-16 h-16 bg-blue/10 rounded-full flex items-center justify-center text-2xl">
+                        ⏰
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Users Table Section -->
+        <div class="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden animate-fadeIn"
+            style="animation-delay: 0.3s;">
+            <div class="bg-gradient-to-r from-primary-green to-dark-green px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-2xl">📊</span>
+                        <div>
+                            <h2 class="text-xl font-bold text-white">Registered Users</h2>
+                            <p class="text-green-100 text-sm">Environmental monitoring system access</p>
+                        </div>
+                    </div>
+                    <div class="text-white/80 text-sm">
+                        Last updated: <span id="lastUpdated"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <% if (users.length===0) { %>
+                    <div class="text-center py-12">
+                        <div
+                            class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center text-4xl">
+                            👤
+                        </div>
+                        <h3 class="text-xl font-semibold text-urban-gray mb-2">No Users Yet</h3>
+                        <p class="text-urban-gray/60">Users will appear here once they register with the system</p>
+                    </div>
+                    <% } else { %>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b-2 border-primary-green/20">
+                                        <th class="text-left py-4 px-4 font-semibold text-urban-gray">
+                                            <div class="flex items-center space-x-2">
+                                                <span>👤</span>
+                                                <span>User Name</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-left py-4 px-4 font-semibold text-urban-gray">
+                                            <div class="flex items-center space-x-2">
+                                                <span>📧</span>
+                                                <span>Email Address</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-left py-4 px-4 font-semibold text-urban-gray">
+                                            <div class="flex items-center space-x-2">
+                                                <span>✅</span>
+                                                <span>Google Id</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-left py-4 px-4 font-semibold text-urban-gray">
+                                            <div class="flex items-center space-x-2">
+                                                <span>✅</span>
+                                                <span>Verified As</span>
+                                            </div>
+                                        </th>
+                                        <th class="text-left py-2 px-4 font-semibold text-urban-gray">🆔 Session</th>
+                                        <th class="text-left py-2 px-4 font-semibold text-urban-gray">⏳ Expires</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <% users.forEach((user, index)=> { %>
+                                        <tr
+                                            class="hover:bg-primary-green/5 transition-colors duration-200 animate-slideIn">
+                                            <td class="py-4 px-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <% if (user) { %>
+                                                        <div
+                                                            class="flex items-center justify-center mt-4 animate-fadeIn animation-delay-200 relative">
+
+                                                            <!-- Profile Image -->
+                                                            <div
+                                                                class="w-14 h-14 rounded-full overflow-hidden shadow-md">
+                                                                <img id="user-image" src="<%= user.image %>"
+                                                                    alt="User Image" class="w-full h-full object-cover"
+                                                                    referrerpolicy="no-referrer"
+                                                                    onerror="handleImageError()" />
+                                                            </div>
+
+                                                            <!-- Fallback Initial Circle -->
+                                                            <div id="initial-circle"
+                                                                class="w-14 h-14 bg-primary-green/10 rounded-full flex items-center justify-center text-primary-green font-semibold text-xl shadow-md hidden absolute">
+                                                                <%= user.name.charAt(0).toUpperCase() %>
+                                                            </div>
+
+                                                            <!-- Fallback Script -->
+                                                            <script>
+                                                                function handleImageError() {
+                                                                    const img = document.getElementById('user-image');
+                                                                    const fallback = document.getElementById('initial-circle');
+                                                                    if (img) img.parentElement.style.display = 'none';
+                                                                    if (fallback) fallback.classList.remove('hidden');
+                                                                }
+                                                            </script>
+
+                                                        </div>
+                                                        <% } %>
+
+                                                            <div>
+                                                                <p class="font-semibold text-urban-gray">
+                                                                    <%= user.name %>
+                                                                </p>
+                                                                <p class="text-sm text-urban-gray/60">User ID: #<%= 1000
+                                                                        + index %>
+                                                                </p>
+                                                            </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4">
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-blue">📧</span>
+                                                    <span class="text-urban-gray">
+                                                        <%= user.email %>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4">
+                                                <div class="flex items-center space-x-2">
+                                                    <span class="text-blue">📧</span>
+                                                    <span class="text-urban-gray">
+                                                        <%= user.googleId %>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 px-4">
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                                    Valid User
+                                                </span>
+                                            </td>
+                                           <td class="py-2 px-2 text-urban-gray break-all">
+                                                <% const s=sessionData[String(user._id)]; %>
+                                                    <%= s ? s.sessionId : "No Active Session" %>
+                                            </td>
+                                            <td class="py-2 px-4 text-urban-gray">
+                                                <%= (s && s.expiresAt) ? new Date(s.expiresAt).toLocaleString()
+                                                    : "Logged out / Expired" %>
+                                            </td>
+
+
+
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <button
+                class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:transform hover:scale-105 transition-all duration-300 animate-fadeIn text-left"
+                style="animation-delay: 0.4s;">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-blue/10 rounded-full flex items-center justify-center text-2xl">🔄</div>
+                    <div>
+                        <h3 class="font-semibold text-urban-gray">Refreshed Data</h3>
+                        <p class="text-sm text-urban-gray/60">Updated user information</p>
+                    </div>
+                </div>
+            </button>
+
+            <button
+                class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:transform hover:scale-105 transition-all duration-300 animate-fadeIn text-left"
+                style="animation-delay: 0.5s;">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-water-blue/10 rounded-full flex items-center justify-center text-2xl">📈
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-urban-gray">View Analytics</h3>
+                        <p class="text-sm text-urban-gray/60">System usage statistics</p>
+                    </div>
+                </div>
+            </button>
+
+            <button
+                class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:transform hover:scale-105 transition-all duration-300 animate-fadeIn text-left"
+                style="animation-delay: 0.6s;">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-primary-green/10 rounded-full flex items-center justify-center text-2xl">⚙️
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-urban-gray">Monitor Users</h3>
+                        <p class="text-sm text-urban-gray/60">Configure monitoring parameters</p>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 text-center py-8 mt-12">
+        <div class="max-w-4xl mx-auto px-6 animate-fadeIn" style="animation-delay: 0.7s;">
+            <p class="text-urban-gray/60">&copy; 2025 Chitragupta AI Environmental Systems. All rights reserved.</p>
+            <p class="text-urban-gray/50 text-sm mt-2">Advanced satellite monitoring for sustainable planetary
+                management</p>
+            <p class="text-primary-green/60 text-xs mt-2 italic">"Precision monitoring for a sustainable future"</p>
+        </div>
+    </footer>
+
+    <script>
+        // Update last updated time
+        document.addEventListener('DOMContentLoaded', function () {
+            const lastUpdatedElement = document.getElementById('lastUpdated');
+            if (lastUpdatedElement) {
+                const now = new Date();
+                lastUpdatedElement.textContent = now.toLocaleTimeString();
+            }
+
+            // Add click handlers for quick actions
+            const actionButtons = document.querySelectorAll('button');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Add ripple effect
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            this.style.transform = '';
+                        }, 150);
+                    }, 100);
+                });
+            });
+        });
+        // Live Clock Function
+        function updateClockLive() {
+            const now = new Date();
+            const clockElement = document.getElementById('liveClock');
+            if (clockElement) {
+                clockElement.textContent = now.toLocaleTimeString();
+            }
+        }
+        setInterval(updateClockLive, 1000);
+        updateClockLive(); // Call once on load
+
+
+        // Auto-refresh data every 5 minutes
+        setInterval(() => {
+            const lastUpdatedElement = document.getElementById('lastUpdated');
+            if (lastUpdatedElement) {
+                const now = new Date();
+                lastUpdatedElement.textContent = now.toLocaleTimeString();
+            }
+        }, 300000); // 5 minutes
+    </script>
+</body>
+
+</html>
